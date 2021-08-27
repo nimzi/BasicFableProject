@@ -10,11 +10,25 @@ module.exports = {
     output: {
         path: path.join(__dirname, "./public"),
         filename: "bundle.js",
+        // filename:'[name].js',
+        devtoolModuleFilenameTemplate: info =>
+            path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
     },
+    mode: "development",
+    devtool: "eval-source-map",
     devServer: {
         publicPath: "/",
         contentBase: "./public",
         port: 8080,
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                enforce: "pre",
+                use: ["source-map-loader"],
+            }
+        ]
     },
     module: {
     }
